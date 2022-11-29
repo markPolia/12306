@@ -7,7 +7,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class AppTest {
     @Test
     public void testApp() {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
-        annotationConfigApplicationContext.close();
+        new AnnotationConfigApplicationContext(SpringConfig.class).close();
     }
 }
