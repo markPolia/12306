@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.markPolia.action.dao.RideMapper">
+  <resultMap id="BaseResultMap" type="com.github.markPolia.action.domain.Ride">
+    <id column="ride_id" jdbcType="CHAR" property="rideId" />
+    <result column="uid" jdbcType="CHAR" property="uid" />
+    <result column="train_no" jdbcType="VARCHAR" property="trainNo" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="begin_station" jdbcType="VARCHAR" property="beginStation" />
+    <result column="goal_station" jdbcType="VARCHAR" property="goalStation" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_ride
+    where ride_id = #{rideId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.github.markPolia.action.domain.Ride">
+    insert into t_ride (ride_id, uid, train_no, 
+      price, begin_station, goal_station
+      )
+    values (#{rideId,jdbcType=CHAR}, #{uid,jdbcType=CHAR}, #{trainNo,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{beginStation,jdbcType=VARCHAR}, #{goalStation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.github.markPolia.action.domain.Ride">
+    update t_ride
+    set uid = #{uid,jdbcType=CHAR},
+      train_no = #{trainNo,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      begin_station = #{beginStation,jdbcType=VARCHAR},
+      goal_station = #{goalStation,jdbcType=VARCHAR}
+    where ride_id = #{rideId,jdbcType=CHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select ride_id, uid, train_no, price, begin_station, goal_station
+    from t_ride
+    where ride_id = #{rideId,jdbcType=CHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ride_id, uid, train_no, price, begin_station, goal_station
+    from t_ride
+  </select>
+</mapper>

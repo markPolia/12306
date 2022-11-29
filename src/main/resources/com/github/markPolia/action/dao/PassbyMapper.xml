@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.markPolia.action.dao.PassbyMapper">
+  <resultMap id="BaseResultMap" type="com.github.markPolia.action.domain.Passby">
+    <id column="passby_id" jdbcType="VARCHAR" property="passbyId" />
+    <result column="train_no" jdbcType="VARCHAR" property="trainNo" />
+    <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    <result column="approach" jdbcType="TIME" property="approach" />
+    <result column="departure" jdbcType="TIME" property="departure" />
+    <result column="station_order" jdbcType="TINYINT" property="stationOrder" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_passby
+    where passby_id = #{passbyId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.github.markPolia.action.domain.Passby">
+    insert into t_passby (passby_id, train_no, station_name, 
+      approach, departure, station_order
+      )
+    values (#{passbyId,jdbcType=VARCHAR}, #{trainNo,jdbcType=VARCHAR}, #{stationName,jdbcType=VARCHAR}, 
+      #{approach,jdbcType=TIME}, #{departure,jdbcType=TIME}, #{stationOrder,jdbcType=TINYINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.github.markPolia.action.domain.Passby">
+    update t_passby
+    set train_no = #{trainNo,jdbcType=VARCHAR},
+      station_name = #{stationName,jdbcType=VARCHAR},
+      approach = #{approach,jdbcType=TIME},
+      departure = #{departure,jdbcType=TIME},
+      station_order = #{stationOrder,jdbcType=TINYINT}
+    where passby_id = #{passbyId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select passby_id, train_no, station_name, approach, departure, station_order
+    from t_passby
+    where passby_id = #{passbyId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select passby_id, train_no, station_name, approach, departure, station_order
+    from t_passby
+  </select>
+</mapper>
