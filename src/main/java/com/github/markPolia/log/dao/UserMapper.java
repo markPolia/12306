@@ -4,5 +4,5 @@ import com.github.markPolia.log.domain.User;
 import java.util.List;
 
 public interface UserMapper {
-
+    User log(User user);
 }
