@@ -7,7 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.github.markPolia.log.app.controller.impl.LogActionImpl.SESSION_CACHE;
+import static com.github.markPolia.log.app.controller.impl.LogActionImpl.CONTEXT_CACHE;
 
 @Service("logService")
 @Transactional
@@ -20,7 +20,7 @@ public class LogServiceImpl implements LogService {
         if ((user = mapper.log(user)) == null) {
             return false;
         }
-        SESSION_CACHE.put("user", user);
+        CONTEXT_CACHE.put("user", user);
         return true;
     }
 }

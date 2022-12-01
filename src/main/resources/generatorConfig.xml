@@ -18,27 +18,27 @@
                         password="root">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.github.markPolia.log.domain" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.github.markPolia.action.domain" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.github.markPolia.log.dao" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="com.github.markPolia.action.dao" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator
                 type="xmlMapper"
-                targetPackage="com.github.markPolia.log.dao"
+                targetPackage="com.github.markPolia.action.dao"
                 targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-<!--        <table tableName="t_ride" domainObjectName="Ride" />
+        <!--<table tableName="t_ride" domainObjectName="Ride" />
         <table tableName="t_passby" domainObjectName="Passby" />
         <table tableName="t_station" domainObjectName="Station" />
         <table tableName="t_train" domainObjectName="Train" />-->
-        <table tableName="t_user" domainObjectName="User" />
-
+        <!--<table tableName="t_user" domainObjectName="User" />-->
+        <table tableName="t_passby" domainObjectName="Passby" />
     </context>
 </generatorConfiguration>

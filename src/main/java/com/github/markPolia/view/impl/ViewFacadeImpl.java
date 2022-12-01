@@ -25,4 +25,8 @@ public class ViewFacadeImpl implements ViewFacade {
     public static void print(String str) {
         System.out.print(str);
     }
+
+    public static void error(String str) {
+        System.err.print(str);
+    }
 }

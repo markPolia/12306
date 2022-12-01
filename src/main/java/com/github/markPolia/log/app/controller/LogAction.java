@@ -9,4 +9,9 @@ public interface LogAction {
      * @return 是否能够登录
      */
     boolean doLogIn(User user);
+
+    /**
+     *  注册用户
+     */
+    void doRegister();
 }

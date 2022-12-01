@@ -14,8 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.github.markPolia.view.impl.ViewFacadeImpl.print;
-import static com.github.markPolia.view.impl.ViewFacadeImpl.println;
+import static com.github.markPolia.view.impl.ViewFacadeImpl.*;
 
 @Component("logAction")
 public class LogActionImpl implements LogAction {
@@ -29,9 +28,9 @@ public class LogActionImpl implements LogAction {
     }
 
     /**
-     *  会话缓存
+     *  会话域
      */
-    public static final Map<String, Object> SESSION_CACHE = new HashMap<>(8);
+    public static final Map<String, Object> CONTEXT_CACHE = new HashMap<>(8);
 
     /**
      *  登录服务
@@ -43,46 +42,52 @@ public class LogActionImpl implements LogAction {
         final Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            println("==================Welcome! 🎉🎉🎉======================");
-            println("\t\t1)登录");
-            println("\t\t2)注册");
-            println("\t\t3)退出");
-            int order = scanner.nextInt();
-            if (order == 1) {
-                User user;
-                do {
-                    user = (User) SESSION_CACHE.get("user");
-                    if (user == null) {
-                        print("账号：");
-                        (user = new User()).setAct(scanner.next());
-                        print("密码：");
-                        user.setPwd(scanner.next());
-                    }
-                } while (!logAction.doLogIn(user));
-
-                println("==========================next step！💨💨💨💨========================");
-                println("\t\t1)订票");
-                println("\t\t2)退出");
-                order = scanner.nextInt();
+            try {
+                println("==================Welcome! 🎉🎉🎉======================");
+                println("\t\t1)登录");
+                println("\t\t2)注册");
+                println("\t\t3)退出");
+                int order = scanner.nextInt();
                 if (order == 1) {
-                    // todo 订票
-                    /*
-                        1、查询车次信息并以序号编号
-                            in   出发地、目的地
-                            out 车次、到站时间、出站时间、目的地、价格、座位
-                        2、
-                     */
-                    Ride ride = new Ride();
-                    ride.setBeginStation("成都东");
-                    ride.setGoalStation("秦皇岛");
-                    System.out.println(action.doSearchTrainList(ride));
+                    User user;
+                    do {
+                        user = (User) CONTEXT_CACHE.get("user");
+                        if (user == null) {
+                            print("账号：");
+                            (user = new User()).setAct(scanner.next());
+                            print("密码：");
+                            user.setPwd(scanner.next());
+                        }
+                    }
+                    while (!logAction.doLogIn(user));
+
+                    println("==========================next step！💨💨💨💨========================");
+                    println("\t\t1)订票");
+                    println("\t\t2)退出");
+                    order = scanner.nextInt();
+                    if (order == 1) {
+                        // todo 订票
+                        /*
+                            1、查询车次信息并以序号编号
+                                in   出发地、目的地
+                                out 车次、到站时间、出站时间、目的地、价格、座位
+                            2、
+                         */
+                        Ride ride = new Ride();
+                        ride.setBeginStation("成都");
+                        ride.setGoalStation("秦皇岛");
+                        System.out.println(action.doSearchTrainList(ride));
+                    } else if (order == 2) {
+                        break;
+                    }
                 } else if (order == 2) {
+                    // todo 注册
+                    logAction.doRegister();
+                } else if (order == 3) {
                     break;
                 }
-            } else if (order == 2) {
-                // todo 注册
-            } else if (order == 3) {
-                break;
+            } finally {
+                context.close();
             }
         }
     }
@@ -90,12 +95,13 @@ public class LogActionImpl implements LogAction {
     @Override
     public boolean doLogIn(User user) {
         if (user.getPwd() == null || user.getAct() == null) {
-            throw new RuntimeException("用户名或密码不能为空！");
+            error("用户名或密码不能为空！");
         }
-        if (logService.logIn(user)) {
-            SESSION_CACHE.put("user", user);
-            return true;
-        }
-        return false;
+        return user.getId() != null || logService.logIn(user);
+    }
+
+    @Override
+    public void doRegister() {
+
     }
 }

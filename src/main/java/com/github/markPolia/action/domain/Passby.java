@@ -15,6 +15,8 @@ public class Passby {
 
     private Byte stationOrder;
 
+    private String finalStation;
+
     public String getPassbyId() {
         return passbyId;
     }
@@ -61,5 +63,13 @@ public class Passby {
 
     public void setStationOrder(Byte stationOrder) {
         this.stationOrder = stationOrder;
+    }
+
+    public String getFinalStation() {
+        return finalStation;
+    }
+
+    public void setFinalStation(String finalStation) {
+        this.finalStation = finalStation == null ? null : finalStation.trim();
     }
 }
