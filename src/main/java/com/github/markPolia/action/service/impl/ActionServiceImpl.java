@@ -10,11 +10,7 @@ import com.github.markPolia.action.service.ActionService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 @Service("actionService")
 public class ActionServiceImpl implements ActionService {
@@ -29,11 +25,11 @@ public class ActionServiceImpl implements ActionService {
 
     /**
      *   <pre>
-     *
-     *    1、起 -> 终   G1342   长沙 -> 上海
-     *    2、起 -> 经   G2125   长沙 -> 贵阳
-     *    3、经 -> 终   G1348   长沙 -> 上海
-     *    4、经 -> 经   G1378   长沙 -> 上海
+     *    根据站点获取获取列车车次分为四种情况：
+     *         1、起 -> 终   G1342   长沙 -> 上海
+     *         2、起 -> 经   G2125   长沙 -> 贵阳
+     *         3、经 -> 终   G1348   长沙 -> 上海
+     *         4、经 -> 经   G1378   长沙 -> 上海
      *
      *        出发地的全部站台
      *       select begin_station_names(station_name) from t_station where city = #{beginCity}
@@ -93,6 +89,33 @@ public class ActionServiceImpl implements ActionService {
      */
     @Override
     public List<Passby> searchTicketInfo(Ride ride) {
+        /*
+        select
+            p.train_no, s.station_name 'begin_station', t.station_name 'end_station'
+        from
+            t_station s
+        join
+            t_passby p
+        on
+            p.station_name = s.station_name and s.city = "郑州"
+        join
+                (select
+                    p.train_no, s.station_name, p.station_order
+                from
+                    t_station s
+                join
+                    t_passby p
+                on
+                    p.station_name = s.station_name
+                where # 目的地
+                    s.city = "成都") t
+        on
+            p.train_no = t.train_no
+        # 确保站点顺序
+        and
+            p.station_order < t.station_order
+
+         */
         return null;
     }
 }
