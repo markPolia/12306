@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.markPolia.action.dao.TrainMapper">
+  <resultMap id="BaseResultMap" type="com.github.markPolia.action.domain.Train">
+    <id column="train_no" jdbcType="VARCHAR" property="trainNo" />
+    <result column="train_type" jdbcType="VARCHAR" property="trainType" />
+    <result column="seat_business" jdbcType="INTEGER" property="seatBusiness" />
+    <result column="seat_soft" jdbcType="INTEGER" property="seatSoft" />
+    <result column="seat_hard" jdbcType="INTEGER" property="seatHard" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_train
+    where train_no = #{trainNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.github.markPolia.action.domain.Train">
+    insert into t_train (train_no, train_type, seat_business, 
+      seat_soft, seat_hard)
+    values (#{trainNo,jdbcType=VARCHAR}, #{trainType,jdbcType=VARCHAR}, #{seatBusiness,jdbcType=INTEGER}, 
+      #{seatSoft,jdbcType=INTEGER}, #{seatHard,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.github.markPolia.action.domain.Train">
+    update t_train
+    set train_type = #{trainType,jdbcType=VARCHAR},
+      seat_business = #{seatBusiness,jdbcType=INTEGER},
+      seat_soft = #{seatSoft,jdbcType=INTEGER},
+      seat_hard = #{seatHard,jdbcType=INTEGER}
+    where train_no = #{trainNo,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select train_no, train_type, seat_business, seat_soft, seat_hard
+    from t_train
+    where train_no = #{trainNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select train_no, train_type, seat_business, seat_soft, seat_hard
+    from t_train
+  </select>
+</mapper>
